@@ -1,4 +1,4 @@
-const { DynamoDBClient, PutItemCommand, DeleteItemCommand } = require('@aws-sdk/client-dynamodb')
+const { DeleteItemCommand, DynamoDBClient, PutItemCommand, ScanCommand } = require('@aws-sdk/client-dynamodb')
 
 /**
  * @class DynamoDBStorage
@@ -32,7 +32,7 @@ module.exports = class DynamoDBStorage {
    * @param migrationName - Name of the migration to be logged.
    * @returns {Promise}
    */
-  async logMigration(migrationName) {
+  async logMigration (migrationName) {
     return this.dynamoClient.send(new PutItemCommand({
       TableName: this.tableName,
       Item: {
@@ -49,7 +49,7 @@ module.exports = class DynamoDBStorage {
    * @param migrationName - Name of the migration to be logged.
    * @returns {Promise}
    */
-  async unlogMigration(migrationName) {
+  async unlogMigration (migrationName) {
     return this.dynamoClient.send(new DeleteItemCommand({
       TableName: this.tableName,
       Key: {
@@ -65,7 +65,7 @@ module.exports = class DynamoDBStorage {
    *
    * @returns {Promise.<String[]>}
    */
-  async executed() {
+  async executed () {
     return this.dynamoClient.send(
       new ScanCommand({
         TableName: this.tableName
@@ -80,7 +80,7 @@ module.exports = class DynamoDBStorage {
       })
       .catch((e) => {
         console.error(e)
-        console.warn("Fail to get logged migrations. Returning an empty list.")
+        console.warn('Fail to get logged migrations. Returning an empty list.')
         return []
       })
   }
