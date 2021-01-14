@@ -15,9 +15,10 @@
     "dynamodb",
     "migration",
     "migrate",
-    "migrations"
+    "migrations",
+    "database"
   ],
-  "author": "Blake Morgan <blake_morgan@byu.edu>",
+  "author": "Blake Morgan",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/byu-oit/dynamodb-umzug-storage/issues"
