@@ -13,12 +13,17 @@
   "keywords": [
     "umzug",
     "dynamodb",
-    "migration"
+    "migration",
+    "migrate",
+    "migrations"
   ],
   "author": "Blake Morgan <blake_morgan@byu.edu>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/byu-oit/dynamodb-umzug-storage/issues"
   },
-  "homepage": "https://github.com/byu-oit/dynamodb-umzug-storage#readme"
+  "homepage": "https://github.com/byu-oit/dynamodb-umzug-storage#readme",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.2.0"
+  }
 }
