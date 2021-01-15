@@ -6,6 +6,7 @@ const { DeleteItemCommand, DynamoDBClient, PutItemCommand, ScanCommand } = requi
 module.exports = class DynamoDBStorage {
   dynamoClient
   tableName
+  keyName
 
   /**
    * Constructs DynamoDB migration storage.
@@ -14,16 +15,18 @@ module.exports = class DynamoDBStorage {
    * @param {string} [options.tableName=''] - Name of the DynamoDB. Defaults to a empty string and will throw an error
    * if no table name is provided.
    * @param {string} [options.region='us-west-2'] - Region the DynamoDB table is in. Default to us-west-2 (Oregon).
+   * @param {string} [options.keyName='migrationName'] - The hash key name of the table.
    *
    * @throws Error
    */
-  constructor ({ tableName = '', region = 'us-west-2' } = {}) {
+  constructor ({ tableName = '', region = 'us-west-2', keyName = 'migrationName' } = {}) {
     if (!tableName) {
       throw new Error('A "tableName" storage option is required.')
     }
 
     this.dynamoClient = new DynamoDBClient({ region })
     this.tableName = tableName
+    this.keyName = keyName
   }
 
   /**
@@ -36,7 +39,7 @@ module.exports = class DynamoDBStorage {
     return this.dynamoClient.send(new PutItemCommand({
       TableName: this.tableName,
       Item: {
-        migrationName: { S: migrationName }
+        [this.keyName]: { S: migrationName }
       }
     })).catch(e => {
       throw new Error('Failed to log migration: ' + e)
@@ -53,7 +56,7 @@ module.exports = class DynamoDBStorage {
     return this.dynamoClient.send(new DeleteItemCommand({
       TableName: this.tableName,
       Key: {
-        migrationName: { S: migrationName }
+        [this.keyName]: { S: migrationName }
       }
     })).catch(e => {
       throw new Error('Failed to unlog migration: ' + e)
@@ -74,7 +77,7 @@ module.exports = class DynamoDBStorage {
       .then(scanOutput => {
         const migrations = []
         scanOutput.Items.forEach(value => {
-          migrations.push(value.migrationName)
+          migrations.push(value[this.keyName])
         })
         return migrations
       })
