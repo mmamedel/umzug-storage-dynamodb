@@ -77,7 +77,7 @@ module.exports = class DynamoDBStorage {
       .then(scanOutput => {
         const migrations = []
         scanOutput.Items.forEach(value => {
-          migrations.push(value[this.keyName])
+          migrations.push(value[this.keyName].S)
         })
         return migrations
       })

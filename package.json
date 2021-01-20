@@ -1,5 +1,5 @@
 {
-  "name": "@byu-oit/dynamodb-umzug-storage",
+  "name": "umzug-storage-dynamodb",
   "version": "0.2.0",
   "description": "DynamoDB storage for Umzug migration logs.",
   "main": "index.js",
