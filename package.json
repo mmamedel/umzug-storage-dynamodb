@@ -1,6 +1,6 @@
 {
   "name": "umzug-storage-dynamodb",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "DynamoDB storage for Umzug migration logs.",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/byu-oit/dynamodb-umzug-storage#readme",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.2.0"
+    "@aws-sdk/client-dynamodb": "^3.20.0"
   }
 }
