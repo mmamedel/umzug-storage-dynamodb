@@ -1,4 +1,4 @@
-const { DeleteItemCommand, DynamoDBClient, PutItemCommand, ScanCommand } = require('@aws-sdk/client-dynamodb')
+const { DeleteItemCommand, DynamoDBClient, PutItemCommand, ScanCommand, DynamoDBClientConfig } = require('@aws-sdk/client-dynamodb')
 
 /**
  * @class DynamoDBStorage
@@ -14,17 +14,17 @@ module.exports = class DynamoDBStorage {
    * @param {object} [options]
    * @param {string} [options.tableName=''] - Name of the DynamoDB. Defaults to a empty string and will throw an error
    * if no table name is provided.
-   * @param {string} [options.region='us-west-2'] - Region the DynamoDB table is in. Default to us-west-2 (Oregon).
    * @param {string} [options.keyName='migrationName'] - The hash key name of the table.
+   * @param {DynamoDBClientConfig} [options.dynamoDBConfig={}] - DynamoDB configuration.
    *
    * @throws Error
    */
-  constructor ({ tableName = '', region = 'us-west-2', keyName = 'migrationName' } = {}) {
+  constructor ({ tableName = '', keyName = 'migrationName', dynamoDBConfig = {},  } = {}) {
     if (!tableName) {
       throw new Error('A "tableName" storage option is required.')
     }
 
-    this.dynamoClient = new DynamoDBClient({ region })
+    this.dynamoClient = new DynamoDBClient(dynamoDBConfig)
     this.tableName = tableName
     this.keyName = keyName
   }
