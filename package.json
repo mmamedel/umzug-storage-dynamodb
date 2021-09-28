@@ -4,7 +4,8 @@
   "description": "DynamoDB storage for Umzug migration logs.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:types": "tsc -p tsconfig.build.types.json"
   },
   "repository": {
     "type": "git",
